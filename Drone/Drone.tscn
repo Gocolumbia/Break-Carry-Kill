@@ -1,0 +1,70 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Drone/Leg/DroneLeg.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Drone/Core.png" type="Texture" id=2]
+[ext_resource path="res://Drone/Drone.gd" type="Script" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Walk"
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ 1, true ],
+"method": "raise_leg"
+}, {
+"args": [ 1, false ],
+"method": "raise_leg"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 300, 300 ), Vector2( 461.412, 273.518 ) ]
+}
+
+[node name="Drone" type="Node2D"]
+position = Vector2( 300, 300 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Core" type="Sprite" parent="."]
+z_index = 1
+texture = ExtResource( 2 )
+
+[node name="DroneLeg1" parent="." instance=ExtResource( 1 )]
+position = Vector2( -32, -32 )
+rotation = -0.785398
+
+[node name="DroneLeg2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 32, -32 )
+rotation = 0.785398
+
+[node name="DroneLeg3" parent="." instance=ExtResource( 1 )]
+position = Vector2( -32, 32 )
+rotation = -2.35619
+scale = Vector2( -1, 1 )
+
+[node name="DroneLeg4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 32, 32 )
+rotation = 2.35619
+scale = Vector2( -1, 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Walk"
+anims/Walk = SubResource( 1 )
