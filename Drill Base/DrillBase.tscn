@@ -1,0 +1,188 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Drill Base/SirenLight.png" type="Texture" id=1]
+[ext_resource path="res://Drill Base/DrillBody.png" type="Texture" id=2]
+[ext_resource path="res://UI/RadialMenuButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://UI/cyancircle.png" type="Texture" id=4]
+[ext_resource path="res://UI/graycircle.png" type="Texture" id=5]
+[ext_resource path="res://Drill Base/DrillBase.gd" type="Script" id=6]
+
+[sub_resource type="Animation" id=1]
+resource_name = "DangerLight"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "ReadyLight"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 1, 0.0392157, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.952941, 1, 0.396078, 1 ) ]
+}
+
+[sub_resource type="NavigationPolygon" id=4]
+vertices = PoolVector2Array( -64, 27, -64, -27, -27, -64, 26, -64, 64, -26, 64, 26, 26, 64, -27, 64 )
+polygons = [ PoolIntArray( 0, 1, 2, 3, 4, 5, 6, 7 ) ]
+outlines = [ PoolVector2Array( -64, 27, -64, -27, -27, -64, 26, -64, 64, -26, 64, 26, 26, 64, -27, 64 ) ]
+
+[node name="DrillBase" type="Sprite" groups=[
+"DrillBase",
+"Player",
+]]
+texture = ExtResource( 2 )
+script = ExtResource( 6 )
+
+[node name="Light2D" type="Light2D" parent="."]
+rotation = 4.80941
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+color = Color( 0.952941, 1, 0.396078, 1 )
+shadow_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Light2D"]
+autoplay = "SpinLight"
+anims/DangerLight = SubResource( 1 )
+anims/ReadyLight = SubResource( 2 )
+anims/SpinLight = SubResource( 3 )
+
+[node name="AlertTimer" type="Timer" parent="Light2D"]
+wait_time = 2.0
+one_shot = true
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="."]
+visible = false
+navpoly = SubResource( 4 )
+enabled = false
+
+[node name="RadialMenu" type="TextureProgress" parent="."]
+visible = false
+light_mask = 0
+margin_left = -100.0
+margin_top = -100.0
+margin_right = 100.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 200, 200 )
+texture_under = ExtResource( 5 )
+texture_progress = ExtResource( 4 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RadialMenuButton1" parent="RadialMenu" instance=ExtResource( 3 )]
+margin_left = 84.0
+margin_top = -12.0
+margin_right = 116.0
+margin_bottom = 20.0
+
+[node name="RadialMenuButton2" parent="RadialMenu" instance=ExtResource( 3 )]
+margin_left = 5.00001
+margin_top = 140.0
+margin_right = 37.0
+margin_bottom = 172.0
+
+[node name="RadialMenuButton3" parent="RadialMenu" instance=ExtResource( 3 )]
+margin_left = 165.0
+margin_top = 140.0
+margin_right = 197.0
+margin_bottom = 172.0
+
+[node name="Button" type="Button" parent="."]
+margin_left = -50.0
+margin_top = -50.0
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 100, 100 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpawnLoc" type="Node2D" parent="."]
+
+[node name="SpwnLoc0" type="Position2D" parent="SpawnLoc"]
+position = Vector2( 0, -50 )
+
+[node name="SpwnLoc1" type="Position2D" parent="SpawnLoc"]
+position = Vector2( 50, 0 )
+
+[node name="SpwnLoc2" type="Position2D" parent="SpawnLoc"]
+position = Vector2( 0, 50 )
+
+[node name="SpwnLoc3" type="Position2D" parent="SpawnLoc"]
+position = Vector2( -50, 0 )
+z_index = -1
+[connection signal="timeout" from="Light2D/AlertTimer" to="." method="_on_AlertTimer_timeout"]
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
