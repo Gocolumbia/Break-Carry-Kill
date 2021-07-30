@@ -167,7 +167,9 @@ anims/Stand = SubResource( 1 )
 anims/WalkE = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 3 )
+disabled = true
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
@@ -187,7 +189,9 @@ margin_top = -250.0
 margin_right = 250.0
 margin_bottom = 250.0
 rect_min_size = Vector2( 500, 500 )
-value = 90.0
+max_value = 1.0
+step = 0.0
+value = 1.0
 texture_under = ExtResource( 5 )
 texture_progress = ExtResource( 4 )
 fill_mode = 5

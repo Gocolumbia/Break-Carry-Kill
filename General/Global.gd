@@ -2,19 +2,19 @@ extends Node
 
 var stats = {
 	#Drill Base stats
-	dbMaxHP = 1000,
+	dbMaxHP = 1000.0,
 	#General Drone Stats
-	dMaxHP = 100,
-	dWlkSpd = 100,
+	dMaxHP = 100.0,
+	dWlkSpd = 100.0,
 	#Breaker Drones
-	dBrkRange = 100,
-	dBrkSpd = 5,
+	dBrkRange = 100.0,
+	dBrkSpd = 5.0,
 	#Carrier Drones
 	dCarCap = 5,
-	dCarRange = 100,
+	dCarRange = 100.0,
 	#Killer Drones
-	dKilDmg = 20, 
-	dKilRange = 200
+	dKilDmg = 20.0, 
+	dKilRange = 200.0
 }
 
 var options = {

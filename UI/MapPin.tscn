@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://UI/map pin.png" type="Texture" id=1]
+
+[node name="MapPin" type="Sprite"]
+modulate = Color( 0, 0.952941, 1, 0.654902 )
+texture = ExtResource( 1 )
+offset = Vector2( 0, -12 )

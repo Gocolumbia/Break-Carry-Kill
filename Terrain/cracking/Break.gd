@@ -24,6 +24,7 @@ func _on_BreakAdvTimer_timeout():
 			for i in get_parent().get_parent().get_node("Ores").get_children():
 				if i.tilePos == tilePos:
 					i.broken()
+			get_parent().get_parent().update_darkness(tilePos)
 			queue_free()
 		else:
 			progress += breakNum.size() * Global.stats.dBrkSpd

@@ -7,7 +7,7 @@ var target
 var tgtDist
 var atkRange = 50
 var atkRangeBonus = 0 #Added attack range when attacking larger targets 
-const D_BASE_ATK_RNG_BONUS = 100 #Added attack range for Drill Base
+const D_BASE_ATK_RNG_BONUS = 50 #Added attack range for Drill Base
 var atkDmg = 20
 
 var health = 100
@@ -19,15 +19,19 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
 	if target == null or path.size() == 0:
 		$AnimationPlayer.play("stand")
-	else: if target.global_position.distance_to(global_position) > atkRange:
-		follow_path(walkSpd * delta)
-		$AnimationPlayer.play("walk")
-	else:
-		rotation = (target.global_position - global_position).angle()
-		$AnimationPlayer.play("attack")
+	else: 
+		if target.is_in_group("DrillBase"):
+			atkRangeBonus = D_BASE_ATK_RNG_BONUS
+		else:
+			atkRangeBonus = 0
+		if target.global_position.distance_to(global_position) > atkRange + atkRangeBonus:
+			follow_path(walkSpd * delta)
+			$AnimationPlayer.play("walk")
+		else:
+			rotation = (target.global_position - global_position).angle()
+			$AnimationPlayer.play("attack")
 	
 	pass
 

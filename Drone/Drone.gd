@@ -14,6 +14,8 @@ var target = null
 
 var health = Global.stats.dMaxHP
 
+var droneIndex = 0 #Corresponds to index in Drill Base's "activeDrones" array
+
 const DRONE_COLORS = [Color(0, 0, 0), Color(1, 1, 0), Color(0, 0, 1), Color(1, 0, 0)]
 
 func _ready():
@@ -92,18 +94,22 @@ func _physics_process(delta):
 
 func _unhandled_input(event):
 	if event.is_action_pressed("lclick"):
-		$RadialMenu.hide()
+#		$RadialMenu.hide()
 		if get_parent().selectedDrone == self:
 			path = get_parent().navigate(global_position, get_global_mouse_position())
 			walking = true
-			get_parent().selectedDrone = null
+#			get_parent().selectedDrone = null
 
+
+		
 func otherClick(): #Another player-controlled node was clicked
 	$RadialMenu.hide()
+	pass
+	
 
 func follow_path(speed):
+	get_parent().show_drone_path()
 	if path.size() > 0:
-		
 		var movement = (path[0] - position).normalized() * speed
 #		print(path[0])
 		move_and_collide(movement)
@@ -114,6 +120,7 @@ func follow_path(speed):
 		$AnimationPlayer.play("WalkE")
 #		print(str(path.size()) + str(self)) 
 #		print("walk")
+		
 	else:
 		$AnimationPlayer.play("Stand")
 #		print(str(path.size()) + str(self))
@@ -134,6 +141,7 @@ func _on_Button_pressed():
 		$RadialMenu.scale = Vector2(3,3)
 		for i in $RadialMenu/HP.get_children():
 			i.show()
+		$RadialMenu.show()
 	for i in get_parent().get_children():
 		if i.is_in_group("Player"):
 			if i != self:
@@ -166,7 +174,7 @@ func _on_TargetTimer_timeout():
 						$Line2D.rotation = -rotation
 						$RayCast2D.cast_to = (i.global_position - global_position) * 10
 						$Line2D.points[1] = $RayCast2D.cast_to
-						print($RayCast2D.get_collider())
+#						print($RayCast2D.get_collider())
 						if $RayCast2D.get_collider() != null:
 							if $RayCast2D.get_collider().is_in_group("Enemy"):
 								if target == null:
@@ -177,6 +185,8 @@ func _on_TargetTimer_timeout():
 
 func damage_taken(dmg):
 	health -= dmg
+	$RadialMenu/HP.value = health / Global.stats.dMaxHP
+	get_parent().get_node("UI/SideBarR/DroneSelect" + str(droneIndex) + "/TextureProgress").value = health / Global.stats.dMaxHP
 	if health <= 0:
 		die()
 
@@ -190,8 +200,11 @@ func die():
 			oreDrop.global_position = Vector2(rand_range(-10, 10), rand_range(-10,10)) + global_position
 			oreDrop.type = i
 			get_parent().add_child(oreDrop)
+	if get_parent().selectedDrone == self:
+		get_parent().selectedDrone = null
 	get_parent().get_node("DrillBase").activeDrones[get_parent().get_node("DrillBase").activeDrones.find(self)] = null
 	get_parent().get_node("DrillBase").update_spawn_drone_button()
+	get_parent().update_drone_select(droneIndex)
 	queue_free()
 
 func rad_menu_button(button):

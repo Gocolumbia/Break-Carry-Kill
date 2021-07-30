@@ -43,6 +43,7 @@ func _on_UnloadTimer_timeout():
 	match carriedOres[0]:
 		0: #Gold
 			get_parent().get_parent().funds += Global.GOLD_VALUE
+			get_parent().get_parent().get_node("UI/UpgradeMenu/BG/CenterContainer/VBoxContainer/CenterContainer3/HBoxContainer/CenterContainer/Info/Funds").text = "Funds: $" + str(get_parent().get_parent().funds)
 		1: #Titanium
 			get_parent().get_parent().bankedTi += 1
 	for i in $Ores.get_children():

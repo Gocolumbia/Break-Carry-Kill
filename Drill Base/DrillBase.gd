@@ -47,6 +47,8 @@ func rad_menu_button(button):
 					$RadialMenu.get_children()[i].menuIcon = i + 3
 					$RadialMenu.get_children()[i]._ready()
 			1: #Upgrade/Repair
+				get_parent().get_node("UI/UpgradeMenu").show()
+				$RadialMenu.hide()
 				pass
 			2: #Next Level
 				pass
@@ -55,9 +57,13 @@ func rad_menu_button(button):
 			var newDrone = load("res://Drone/Drone.tscn").instance()
 			newDrone.type = button - 2 #button 3 is breaker, which is index 1, etc
 			newDrone.global_position = $SpawnLoc.get_children()[activeDrones.find(null)].global_position
+			newDrone.droneIndex = activeDrones.find(null)
+			
 			activeDrones[activeDrones.find(null)] = newDrone
 			
 			get_parent().add_child(newDrone)
+			for i in 4:
+				get_parent().update_drone_select(i)
 			$RadialMenu.hide()
 	pass
 
@@ -65,8 +71,20 @@ func damage_taken(dmg):
 	health -= dmg
 	$Light2D/AnimationPlayer.play("DangerLight")
 	$Light2D/AlertTimer.start()
+	$RadialMenu.value = health / Global.stats.dbMaxHP
+	get_parent().get_node("UI/SideBarR/DrillBaseSelect/TextureProgress").value = health / Global.stats.dbMaxHP
+	get_parent().get_node("UI/UpgradeMenu/BG/CenterContainer/VBoxContainer/CenterContainer3/HBoxContainer/CenterContainer/Info/Health").text = "Drillbase Health: " + str(ceil((health / Global.stats.dbMaxHP) * 100)) + "%"
 	if health <= 0:
 		die()
+
+func damage_repair(dmg):
+	health += dmg
+	if health > Global.stats.dbMaxHP:
+		health = Global.stats.dbMaxHP
+	$RadialMenu.value = health / Global.stats.dbMaxHP
+	get_parent().get_node("UI/SideBarR/DrillBaseSelect/TextureProgress").value = health / Global.stats.dbMaxHP
+	get_parent().get_node("UI/UpgradeMenu/BG/CenterContainer/VBoxContainer/CenterContainer3/HBoxContainer/CenterContainer/Info/Health").text = "Drillbase Health: " + str(ceil((health / Global.stats.dbMaxHP) * 100)) + "%"
+	
 
 func die():
 	get_parent().game_over()
