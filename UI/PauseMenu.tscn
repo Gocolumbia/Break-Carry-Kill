@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://UI/PauseMenu.gd" type="Script" id=1]
+[ext_resource path="res://UI/hologram.tres" type="StyleBox" id=2]
+[ext_resource path="res://UI/holo hover.tres" type="StyleBox" id=3]
+[ext_resource path="res://UI/holo press.tres" type="StyleBox" id=4]
+[ext_resource path="res://UI/Fonts/MenuFont.tres" type="DynamicFont" id=5]
 
 [node name="PauseMenu" type="CenterContainer"]
 pause_mode = 2
@@ -13,13 +17,28 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_left = 480.0
-margin_top = 290.0
-margin_right = 544.0
-margin_bottom = 310.0
+margin_left = 483.0
+margin_top = 277.0
+margin_right = 541.0
+margin_bottom = 323.0
 
 [node name="Resume" type="Button" parent="VBoxContainer"]
-margin_right = 64.0
-margin_bottom = 20.0
+margin_right = 58.0
+margin_bottom = 21.0
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 4 )
+custom_styles/normal = ExtResource( 2 )
+custom_fonts/font = ExtResource( 5 )
 text = "Resume"
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+margin_top = 25.0
+margin_right = 58.0
+margin_bottom = 46.0
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 4 )
+custom_styles/normal = ExtResource( 2 )
+custom_fonts/font = ExtResource( 5 )
+text = "Quit"
 [connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_Resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_Quit_pressed"]

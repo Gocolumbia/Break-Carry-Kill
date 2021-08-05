@@ -1,4 +1,4 @@
-extends CenterContainer
+extends Node2D
 
 
 # Declare member variables here. Examples:
@@ -16,13 +16,6 @@ func _ready():
 #	pass
 
 
-func _on_Resume_pressed():
-	get_tree().paused = false
-	hide()
-	pass # Replace with function body.
-
-
-func _on_Quit_pressed():
-	get_tree().paused = false
-	get_tree().change_scene("res://MainMenu.tscn")
+func _on_Start_pressed():
+	get_tree().change_scene("res://Terrain/Level.tscn")
 	pass # Replace with function body.

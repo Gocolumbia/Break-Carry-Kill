@@ -1,0 +1,65 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Drill Base/DB side anim/DB side anim 0.png" type="Texture" id=1]
+[ext_resource path="res://Drill Base/DB side anim/DB side anim 1.png" type="Texture" id=2]
+[ext_resource path="res://Drill Base/DB side anim/DB side anim 2.png" type="Texture" id=3]
+[ext_resource path="res://Drill Base/DB side anim/DB side anim 4.png" type="Texture" id=4]
+[ext_resource path="res://Drill Base/DB side anim/DB side anim 3.png" type="Texture" id=5]
+[ext_resource path="res://Drill Base/DB side anim/DB side anim 5.png" type="Texture" id=6]
+[ext_resource path="res://Drill Base/DB side anim/DB side anim 6.png" type="Texture" id=7]
+[ext_resource path="res://Drill Base/DB side anim/DB side anim 7.png" type="Texture" id=8]
+[ext_resource path="res://Drill Base/DB side anim/DB side anim wall.png" type="Texture" id=9]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 7 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 1 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 20.0
+} ]
+
+[sub_resource type="Animation" id=2]
+resource_name = "TunnelMove"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Tunnel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 564 ), Vector2( 0, 0 ) ]
+}
+
+[node name="DBSideAnim" type="AnimatedSprite"]
+position = Vector2( 512, 300 )
+frames = SubResource( 1 )
+frame = 6
+playing = true
+
+[node name="Dark" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 0, 89 )
+z_index = -1
+texture = ExtResource( 9 )
+
+[node name="Tunnel" type="Node2D" parent="."]
+position = Vector2( 0, 261.74 )
+z_index = -2
+
+[node name="TunnelBottom" type="Sprite" parent="Tunnel"]
+texture = ExtResource( 9 )
+offset = Vector2( 0, -18 )
+
+[node name="TunnelTop" type="Sprite" parent="Tunnel"]
+position = Vector2( 0, -564 )
+texture = ExtResource( 9 )
+offset = Vector2( 0, -18 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "TunnelMove"
+playback_speed = 0.5
+anims/TunnelMove = SubResource( 2 )

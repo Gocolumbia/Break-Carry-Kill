@@ -1,0 +1,71 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Drill Base/DB side anim/DBSideAnim.tscn" type="PackedScene" id=1]
+[ext_resource path="res://UI/title.png" type="Texture" id=2]
+[ext_resource path="res://UI/Fonts/ShareTechMono-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://UI/hologram.tres" type="StyleBox" id=4]
+[ext_resource path="res://UI/holo hover.tres" type="StyleBox" id=5]
+[ext_resource path="res://UI/holo press.tres" type="StyleBox" id=6]
+[ext_resource path="res://MainMenu.gd" type="Script" id=7]
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+outline_size = 2
+outline_color = Color( 0, 0.172549, 0.301961, 1 )
+extra_spacing_top = -2
+extra_spacing_bottom = -2
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=1]
+size = 50
+outline_size = 2
+outline_color = Color( 0, 0.172549, 0.301961, 1 )
+extra_spacing_top = -2
+extra_spacing_bottom = -2
+font_data = ExtResource( 3 )
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource( 7 )
+
+[node name="DBSideAnim" parent="." instance=ExtResource( 1 )]
+frame = 0
+
+[node name="title" type="Sprite" parent="."]
+position = Vector2( 512, 200 )
+scale = Vector2( 8, 8 )
+texture = ExtResource( 2 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_top = 250.0
+margin_right = 1024.0
+margin_bottom = 400.0
+rect_min_size = Vector2( 1024, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 325.0
+margin_right = 699.0
+margin_bottom = 150.0
+custom_constants/separation = 50
+
+[node name="Credit" type="Label" parent="CenterContainer/VBoxContainer"]
+margin_right = 374.0
+margin_bottom = 42.0
+custom_fonts/font = SubResource( 2 )
+text = "by William Koyama"
+
+[node name="Start" type="Button" parent="CenterContainer/VBoxContainer"]
+margin_top = 92.0
+margin_right = 374.0
+margin_bottom = 150.0
+custom_styles/hover = ExtResource( 5 )
+custom_styles/pressed = ExtResource( 6 )
+custom_styles/normal = ExtResource( 4 )
+custom_fonts/font = SubResource( 1 )
+text = "START"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Start" to="." method="_on_Start_pressed"]

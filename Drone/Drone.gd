@@ -205,6 +205,7 @@ func die():
 	get_parent().get_node("DrillBase").activeDrones[get_parent().get_node("DrillBase").activeDrones.find(self)] = null
 	get_parent().get_node("DrillBase").update_spawn_drone_button()
 	get_parent().update_drone_select(droneIndex)
+	get_parent().show_drone_path()
 	queue_free()
 
 func rad_menu_button(button):

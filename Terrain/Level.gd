@@ -113,7 +113,10 @@ func navigate(userPos, targetPos):
 	return path 
 
 func game_over():
-	$GameOverText.show()
+	$UI/GameOverText.show()
+	$GameOverTimer.start(3)
+	$UI/SideBarL/Pause.disabled = true
+	
 
 func show_drone_path():
 	for i in $DronePath.get_children():
@@ -178,3 +181,9 @@ func update_darkness(coord): #Reveals darkened areas adjacent to revealed floor 
 			5: #Hidden unbreakable tile
 				$Navigation2D/TileMap.set_cellv(coord + i, 2)
 	pass
+
+
+func _on_GameOverTimer_timeout():
+	get_tree().change_scene("res://MainMenu.tscn")
+#	print("swithc")
+	pass # Replace with function body.
